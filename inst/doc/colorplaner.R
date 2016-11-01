@@ -19,9 +19,9 @@ library(colorplaner)
 data(iris)
 
 iris_plot <- ggplot(iris, 
-                aes(x = Petal.Length, y = Petal.Width, shape = Species)) +
-  geom_point(aes(color = Sepal.Length, color2 = Sepal.Width),
-             position = "jitter") +
+                aes(x = Petal.Length, y = Petal.Width, shape = Species,
+                    color = Sepal.Length, color2 = Sepal.Width)) +
+  geom_point(position = "jitter") +
   scale_color_colorplane(limits = range(iris$Sepal.Length),
                          limits_y = range(iris$Sepal.Width),
                          breaks_y = function(x)seq.int(x[1], x[2]),
@@ -78,8 +78,9 @@ iris_plot %+% iris[iris$labeled, ] +
   theme(legend.position = "bottom", legend.text = element_text(size = 8), 
         legend.key.width = grid::unit(3, "mm"))
 
-ggplot(sepal_grid, aes(x = Sepal.Length, y = Sepal.Width)) +
-  geom_point(aes(color = Sepal.Length, color2 = Sepal.Width), size = 5) +
+ggplot(sepal_grid, aes(x = Sepal.Length, y = Sepal.Width, 
+                       color2 = Sepal.Width)) +
+  geom_point(aes(color = Sepal.Length), size = 5) +
   geom_point(aes(shape = Species), data = iris[iris$labeled, ], size = 1.5) +
   geom_text(aes(label = let), data = iris[iris$labeled, ], 
             nudge_x = .14, nudge_y = -.04) +
